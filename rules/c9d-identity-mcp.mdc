@@ -1,0 +1,47 @@
+---
+description: C9D Identity MCP admin server, PAT, streamable-http, OAuth clients, users, organizations, API keys, identity.c9d.engineering
+alwaysApply: false
+---
+
+# C9D Identity MCP (admin automation)
+
+## Base URL
+
+`https://identity.c9d.engineering/api/mcp/streamable-http` (or your deployment origin + `/api/mcp/streamable-http`).
+
+## Prerequisites
+
+- `MCP_ADMIN_ENABLED=true`. If missing, JSON-RPC returns `MCP_ROUTE_DISABLED` / `-32004` — not a bad PAT.
+- PAT from **Admin → API Keys** (`Authorization: Bearer c9d_pat_...`). Never log or echo full tokens.
+
+## HTTP (Streamable)
+
+POST with:
+
+- `Content-Type: application/json`
+- `Accept: application/json, text/event-stream`
+
+Omitting `Accept` often yields **406**.
+
+## Scopes
+
+- Every tool needs `mcp:access`.
+- With `MCP_FINE_GRAIN_SCOPES_ENABLED=true`, each tool needs domain scopes (`users:read`/`users:write`, `oauth-clients:*`, `organizations:*`, etc.). See `lib/mcp-scope-policy.ts` and `docs/admin-guide/MCP_SERVER.md`.
+
+## Tool families (do not conflate)
+
+1. **Product hierarchy:** `create_product` → `create_application` → `create_environment`; link OAuth via `oauthClientId` on environment (may need `oauth-clients:write` in fine-grain when linking).
+2. **OAuth clients:** `list_oauth_clients`, `get_oauth_client`, `create_oauth_client`, `update_oauth_client`, `delete_oauth_client`, `rotate_oauth_client_secret`. **`clientSecret` only on create/rotate** — never repeat in logs or chat.
+3. **Users:** `list_users`, `get_user`, `create_user`, `update_user`, `delete_user`, ban/unban, `update_user_role`, `revoke_session`. No self-delete via PAT.
+4. **Organizations:** list/get/members CRUD and member add/remove/role.
+
+## Source of truth
+
+- Tool names and inputs: `lib/mcp-tool-registry.ts`
+- Handlers: `app/api/mcp/[transport]/route.ts`
+- Human doc: `docs/admin-guide/MCP_SERVER.md`
+- Signed-in quick reference: `/admin/ai-resources`
+
+## Audit
+
+Mutations use `channel=mcp` with `traceId` / `requestId` on audit logs.

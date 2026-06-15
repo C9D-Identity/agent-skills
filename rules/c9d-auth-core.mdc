@@ -1,0 +1,39 @@
+---
+description: C9D Identity @c9d/auth-core SDK — framework-agnostic server auth primitives (env, OIDC/PKCE helpers, signed payloads, token exchange body).
+alwaysApply: false
+---
+
+# C9D Identity — @c9d/auth-core (server primitives)
+
+## Use
+
+Use `@c9d/auth-core` for framework-neutral server auth logic:
+
+- env contract resolution and fail-fast validation
+- OIDC discovery retrieval
+- PKCE/state/session payload helpers
+- token exchange request body composition
+
+## Required env contract
+
+- `C9D_IDENTITY_URL` (or `NEXT_PUBLIC_C9D_IDENTITY_URL`)
+- `C9D_OAUTH_CLIENT_ID` (or `NEXT_PUBLIC_C9D_OAUTH_CLIENT_ID`)
+- `C9D_SESSION_SECRET`
+- `APP_BASE_URL` or `NEXT_PUBLIC_APP_URL`
+
+Optional:
+
+- `C9D_OAUTH_CLIENT_SECRET` (server-only; confidential clients)
+
+Never define `NEXT_PUBLIC_C9D_OAUTH_CLIENT_SECRET`.
+
+## Security
+
+- Keep `C9D_SESSION_SECRET` and `C9D_OAUTH_CLIENT_SECRET` out of client bundles.
+- Keep authorization code token exchange server-side.
+- Generate session secret with `openssl rand -base64 32`.
+
+## Docs
+
+- `/docs/sdk/auth-core`
+- `/resources/cursor/c9d-auth-core/SKILL.md`

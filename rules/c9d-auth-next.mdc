@@ -1,0 +1,43 @@
+---
+description: C9D Identity @c9d/auth-next SDK — Next.js middleware/proxy + login/callback/logout route handlers and server session checks.
+alwaysApply: false
+---
+
+# C9D Identity — @c9d/auth-next (Next.js server SDK)
+
+## Use
+
+Use `@c9d/auth-next` when implementing server-side auth flow plumbing in product Next.js apps:
+
+- middleware/proxy unauthenticated redirects
+- route handlers for `/auth/login`, `/auth/callback`, `/auth/logout`
+- server session retrieval (`getSession`)
+- embedded bridge wrappers (`/api/auth/embedded/*`) using `createC9DEmbeddedBridge`
+
+`@c9d/auth-next` composes framework-neutral primitives from `@c9d/auth-core`.
+
+## Environment contract
+
+Required:
+
+- `C9D_IDENTITY_URL` (or `NEXT_PUBLIC_C9D_IDENTITY_URL`)
+- `C9D_OAUTH_CLIENT_ID` (or `NEXT_PUBLIC_C9D_OAUTH_CLIENT_ID`)
+- `C9D_SESSION_SECRET`
+
+Optional confidential exchange:
+
+- `C9D_OAUTH_CLIENT_SECRET` (server-only)
+
+Never define `NEXT_PUBLIC_C9D_OAUTH_CLIENT_SECRET`.
+
+## Security
+
+- Token exchange and session signing stay server-side.
+- Keep `C9D_SESSION_SECRET` and `C9D_OAUTH_CLIENT_SECRET` out of client bundles.
+- OAuth redirect URIs must target the product callback (`/auth/callback`), not identity host callback.
+
+## Docs
+
+- `/docs/sdk/nextjs-server`
+- `packages/auth-next/docs/PRODUCT_BRIDGE_QUICKSTART.md`
+- `/resources/cursor/c9d-auth-next/SKILL.md`

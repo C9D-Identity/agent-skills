@@ -1,0 +1,32 @@
+---
+description: C9D Identity @c9d/auth-react SDK — C9DAuthProvider, tarball install, clientId and identityUrl, product UI vs MCP
+alwaysApply: false
+---
+
+# C9D Identity — @c9d/auth-react (client SDK)
+
+## Install
+
+Use **`GET /api/sdk/manifest`** on the target identity host for `version`, `tarball`, `install`, and `docs`.
+
+## Provider
+
+All SDK components and hooks must be under **`C9DAuthProvider`** with:
+
+- **`clientId`** — public OAuth client id for the environment
+- **`identityUrl`** — origin of C9D Identity (e.g. `https://identity.c9d.engineering`), no trailing slash
+- **`apiBaseUrl`** (optional, recommended) — product-local embedded bridge base (`/api/auth/embedded`)
+- **`locale`** / **`messages`** (optional) — auth component translation surface
+
+## Boundaries
+
+- **Product UI / session:** `@c9d/auth-react` — never embed **PAT** or **`clientSecret`** in client code.
+- **Product middleware / callback handlers:** `@c9d/auth-next`.
+- **Admin automation:** MCP + PAT — use **`c9d-identity-mcp`** skill, not this rule.
+
+## Docs
+
+- Hosted: **`/docs/sdk`** on the identity deployment
+- Components: **`/docs/sdk/components`**
+- Theming: **`/docs/sdk/theming`**
+- Skill download: **`/resources/cursor/c9d-auth-react/SKILL.md`**
