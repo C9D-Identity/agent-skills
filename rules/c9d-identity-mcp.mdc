@@ -26,7 +26,8 @@ Omitting `Accept` often yields **406**.
 ## Scopes
 
 - Every tool needs `mcp:access`.
-- With `MCP_FINE_GRAIN_SCOPES_ENABLED=true`, each tool needs domain scopes (`users:read`/`users:write`, `oauth-clients:*`, `organizations:*`, etc.). See `lib/mcp-scope-policy.ts` and `docs/admin-guide/MCP_SERVER.md`.
+- With `MCP_FINE_GRAIN_SCOPES_ENABLED=true`, each tool needs domain scopes (`users:read`/`users:write`, `oauth-clients:*`, `organizations:*`, etc.). Destructive tools (delete/ban) also need `admin:delete`.
+- Discover the current scope mode + classes from the **public** capabilities doc: `GET https://identity.c9d.engineering/.well-known/mcp-capabilities`. The authoritative, per-tool input schema comes from the MCP server's own `tools/list` after you connect with the PAT.
 
 ## Tool families (do not conflate)
 
@@ -35,12 +36,13 @@ Omitting `Accept` often yields **406**.
 3. **Users:** `list_users`, `get_user`, `create_user`, `update_user`, `delete_user`, ban/unban, `update_user_role`, `revoke_session`. No self-delete via PAT.
 4. **Organizations:** list/get/members CRUD and member add/remove/role.
 
-## Source of truth
+## References (publicly accessible — no login)
 
-- Tool names and inputs: `lib/mcp-tool-registry.ts`
-- Handlers: `app/api/mcp/[transport]/route.ts`
-- Human doc: `docs/admin-guide/MCP_SERVER.md`
-- Signed-in quick reference: `/admin/ai-resources`
+- Live tool list + input schemas: call `tools/list` on the MCP server once connected with the PAT (authoritative).
+- Capabilities (transport, scope mode, scope classes, tool-set hash): `GET https://identity.c9d.engineering/.well-known/mcp-capabilities`.
+- Agent index of all public resources: `https://identity.c9d.engineering/llms.txt`.
+
+(Platform maintainers only — not reachable by external agents: repo files `lib/mcp-tool-registry.ts`, `app/api/mcp/[transport]/route.ts`, `docs/admin-guide/MCP_SERVER.md`, and the login-gated `/admin/ai-resources`.)
 
 ## Audit
 

@@ -7,9 +7,9 @@ description: Use when the user asks to query or change C9D Identity users, sessi
 
 ## Before you start
 
-1. Confirm target host (production vs preview) and that `MCP_ADMIN_ENABLED=true`.
+1. Confirm target host (production `https://identity.c9d.engineering`, or your deployment origin) and that `MCP_ADMIN_ENABLED=true`.
 2. Prefer read tools (`list_*`, `get_*`) before writes.
-3. Fine-grain mode: ensure the PAT includes the scopes for each tool (`lib/mcp-scope-policy.ts`).
+3. Fine-grain mode: ensure the PAT includes the scopes for each tool. Discover scope mode + classes from the public `GET https://identity.c9d.engineering/.well-known/mcp-capabilities`; the authoritative per-tool input schema comes from the MCP server's `tools/list` after connecting.
 
 ## Workflow: Product + OAuth
 
@@ -42,12 +42,13 @@ Operators see `MCP_ROUTE_DISABLED`. Use Admin UI or REST admin APIs instead.
 
 ## Workflow: Product analytics
 
-1. `get_oauth_client` returns `userCount` and `activeSessionCount` for any product's OAuth client.
-2. The admin dashboard (`/admin`) supports a product selector dropdown to filter all analytics by product.
-3. `GET /api/admin/analytics?clientId=<public-clientId>` returns product-scoped KPIs, time-series, retention, and recent users.
-4. The analytics response always includes a `products` array with per-client summary (userCount, activeSessionCount, newUsersWeek).
+1. **Via the PAT/MCP (what an agent can do):** `get_oauth_client` returns `userCount` and `activeSessionCount` for any product's OAuth client.
+2. The richer analytics surfaces — the `/admin` dashboard and `GET /api/admin/analytics?clientId=…` (KPIs, time-series, retention, recent users) — require an **admin browser session** and are **not** reachable with a PAT. Use the MCP tools above for programmatic analytics.
 
-## Reference
+## References (publicly accessible — no login)
 
-- Policy and tables: `docs/admin-guide/MCP_SERVER.md`
-- In-app summary (login required): `/admin/ai-resources`
+- Live tool list + input schemas: the MCP server's `tools/list` (after connecting with the PAT) — authoritative.
+- Capabilities (transport, scope mode/classes, tool-set hash): `https://identity.c9d.engineering/.well-known/mcp-capabilities`.
+- All public agent resources (SDKs, skills install, discovery): `https://identity.c9d.engineering/llms.txt`.
+
+(Platform-maintainer-only, not reachable by external agents: repo doc `docs/admin-guide/MCP_SERVER.md` and the login-gated `/admin/ai-resources`.)
