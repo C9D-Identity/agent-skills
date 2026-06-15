@@ -18,7 +18,7 @@ Use **`c9d-auth-core`** for framework-agnostic server auth primitives.
 
 1. Resolve **identity base URL** (production, preview, or local tunnel)—no trailing slash.
 2. Obtain the **public OAuth `clientId`** for your app’s environment from C9D Identity admin (product → application → environment / OAuth client).
-3. Fetch **`GET {identity}/api/sdk/manifest`** for `version`, `tarball`, `install`, and `docs` URL.
+3. Fetch **`GET https://identity.c9d.engineering/api/sdk/manifest`** for `version`, `tarball`, `install`, and `docs` URL.
 
 ## Install
 
@@ -47,10 +47,10 @@ Peer deps: `react`, `react-dom`. Optional: `@simplewebauthn/browser` for passkey
 
 On the identity deployment (no monorepo required):
 
-- **SDK docs:** `{identity}/docs/sdk`
-- **Components:** `{identity}/docs/sdk/components`
-- **Theming + i18n:** `{identity}/docs/sdk/theming`
-- **Downloadable copy of this skill:** `{identity}/resources/cursor/c9d-auth-react/SKILL.md`
+- **SDK docs:** `https://identity.c9d.engineering/docs/sdk`
+- **Components:** `https://identity.c9d.engineering/docs/sdk/components`
+- **Theming + i18n:** `https://identity.c9d.engineering/docs/sdk/theming`
+- **Downloadable copy of this skill:** `https://identity.c9d.engineering/resources/cursor/c9d-auth-react/SKILL.md`
 
 ## Reading order (deep dive)
 

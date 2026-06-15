@@ -50,7 +50,7 @@ openssl rand -base64 32
 Install both SDK tarballs (manifest exposes exact URLs):
 
 ```bash
-pnpm add {identity}/sdk/c9d-auth-core-{version}.tgz {identity}/sdk/c9d-auth-next-{version}.tgz
+pnpm add https://identity.c9d.engineering/sdk/c9d-auth-core-{version}.tgz https://identity.c9d.engineering/sdk/c9d-auth-next-{version}.tgz
 ```
 
 ```ts
@@ -99,7 +99,7 @@ Product usage is tracked automatically by the identity host. When a product app 
 
 ## Hosted documentation
 
-- SDK docs hub: `{identity}/docs/sdk`
-- Next.js server guide: `{identity}/docs/sdk/nextjs-server`
-- Product bridge quickstart: `{identity}/docs/sdk/product-bridge-quickstart` (or repo doc `packages/auth-next/docs/PRODUCT_BRIDGE_QUICKSTART.md`)
-- Downloadable copy of this skill: `{identity}/resources/cursor/c9d-auth-next/SKILL.md`
+- SDK docs hub: `https://identity.c9d.engineering/docs/sdk`
+- Next.js server guide: `https://identity.c9d.engineering/docs/sdk/nextjs-server`
+- Product bridge quickstart: `https://identity.c9d.engineering/docs/sdk/product-bridge-quickstart` (or repo doc `packages/auth-next/docs/PRODUCT_BRIDGE_QUICKSTART.md`)
+- Downloadable copy of this skill: `https://identity.c9d.engineering/resources/cursor/c9d-auth-next/SKILL.md`

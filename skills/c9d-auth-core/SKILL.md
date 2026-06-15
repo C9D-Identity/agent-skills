@@ -49,6 +49,6 @@ openssl rand -base64 32
 
 ## Hosted documentation
 
-- SDK docs hub: `{identity}/docs/sdk`
-- Auth core guide: `{identity}/docs/sdk/auth-core`
-- Downloadable copy of this skill: `{identity}/resources/cursor/c9d-auth-core/SKILL.md`
+- SDK docs hub: `https://identity.c9d.engineering/docs/sdk`
+- Auth core guide: `https://identity.c9d.engineering/docs/sdk/auth-core`
+- Downloadable copy of this skill: `https://identity.c9d.engineering/resources/cursor/c9d-auth-core/SKILL.md`
